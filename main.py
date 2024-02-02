@@ -272,8 +272,16 @@ class MyHTTP(CGIHTTPRequestHandler):
                 is_invalid = True
             """
             
-            with Session(postgres_engine) as session, session.begin():
-                sortedjson, counter = PostgresTodos.get_entries_as_json(session, status, sortby)
+
+            if status in ['ALL', 'PENDING', 'LATE', 'DONE']:
+                if persistence_method == 'POSTGRES':
+                    with Session(postgres_engine) as session, session.begin():
+                        sortedjson, counter = PostgresTodos.get_entries_as_json(session, status, sortby)
+                elif persistence_method == 'MONGO':
+                    sortedjson, counter = mongoTodos.get_entries_as_json(status, sortby)
+
+
+            
             
             if sortedjson == None:  #Added if for invalid ~ check later
                 is_invalid = False
