@@ -1,0 +1,685 @@
+{
+	"info": {
+		"_postman_id": "9439d98c-94b6-4e40-89c7-832eb8f4f87a",
+		"name": "Server TODO Exercise ex7 students flow",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16700889",
+		"_collection_link": "https://mta-automation.postman.co/workspace/practical-tools~fc617429-33d3-44a1-b6b1-81e38fff92da/collection/16700889-9439d98c-94b6-4e40-89c7-832eb8f4f87a?action=share&source=collection_link&creator=16700889"
+	},
+	"item": [
+		{
+			"name": "ex7 - DB flow for students practice",
+			"item": [
+				{
+					"name": "Get total Todos from POSTGRES with filter=ALL (I)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Initial quanitiy of 2 todos in postgres DB\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result).to.eql(2);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3769/todo/size?status=ALL&persistenceMethod=POSTGRES",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3769",
+							"path": [
+								"todo",
+								"size"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "ALL"
+								},
+								{
+									"key": "persistenceMethod",
+									"value": "POSTGRES"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get total Todos from MONGO with filter=ALL (I)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Initial quanitiy of 2 todos in mongo DB\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result).to.eql(2);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3769/todo/size?status=ALL&persistenceMethod=MONGO",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3769",
+							"path": [
+								"todo",
+								"size"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "ALL"
+								},
+								{
+									"key": "persistenceMethod",
+									"value": "MONGO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create duplicate TODO",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should not succeed create a TODO that already exists\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorMessage).to.contain(\"Error\");    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"New Year\",\r\n  \"content\": \"prepare popcorn\",\r\n  \"dueDate\": 1703881891000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3769/todo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3769",
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get total Todos from POSTGRES with filter=ALL (II)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Initial quanitiy of 2 todos in postgres DB\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result).to.eql(2);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3769/todo/size?status=ALL&persistenceMethod=POSTGRES",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3769",
+							"path": [
+								"todo",
+								"size"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "ALL"
+								},
+								{
+									"key": "persistenceMethod",
+									"value": "POSTGRES"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get total Todos from MONGO with filter=ALL (II)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Initial quanitiy of 2 todos in mongo DB\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result).to.eql(2);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3769/todo/size?status=ALL&persistenceMethod=MONGO",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3769",
+							"path": [
+								"todo",
+								"size"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "ALL"
+								},
+								{
+									"key": "persistenceMethod",
+									"value": "MONGO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get total Todos from MONGO with filter=DONE (I)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"expect 0 todos in done status (from mongo DB)\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result).to.eql(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3769/todo/size?status=DONE&persistenceMethod=MONGO",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3769",
+							"path": [
+								"todo",
+								"size"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "DONE"
+								},
+								{
+									"key": "persistenceMethod",
+									"value": "MONGO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Todo 2 status to DONE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"expect PENDING old status of todo 2 after updating it to DONE\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result).to.eql(\"PENDING\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3769/todo?id=2&status=DONE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3769",
+							"path": [
+								"todo"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								},
+								{
+									"key": "status",
+									"value": "DONE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get total Todos from MONGO with filter=DONE (II)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"expect 1 todos in done status (from mongo DB)\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result).to.eql(1);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3769/todo/size?status=DONE&persistenceMethod=MONGO",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3769",
+							"path": [
+								"todo",
+								"size"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "DONE"
+								},
+								{
+									"key": "persistenceMethod",
+									"value": "MONGO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get total Todos from POSTGRES with filter=DONE (II) Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"expect 1 todos in done status (from postgres DB)\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result).to.eql(1);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3769/todo/size?status=DONE&persistenceMethod=POSTGRES",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3769",
+							"path": [
+								"todo",
+								"size"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "DONE"
+								},
+								{
+									"key": "persistenceMethod",
+									"value": "POSTGRES"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create third TODO",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"create new todo should get ID #3\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result).to.eql(3);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Buy Groceries\",\r\n  \"content\": \"milk | bread | ice cream\",\r\n  \"dueDate\": 1706560291000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3769/todo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3769",
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get PENDING Todos content (from MONGO)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"expect 2 todos in particular order in PENDING state(from mongo DB)\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result[0].id).to.eql(3);\r",
+									"    pm.expect(jsonData.result[1].id).to.eql(1);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3769/todo/content?status=PENDING&sortBy=TITLE&persistenceMethod=MONGO",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3769",
+							"path": [
+								"todo",
+								"content"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "PENDING"
+								},
+								{
+									"key": "sortBy",
+									"value": "TITLE"
+								},
+								{
+									"key": "persistenceMethod",
+									"value": "MONGO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get PENDING Todos content (from POSTGRES)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"expect 2 todos in particular order in PENDING state (from postgres DB)\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result[0].title).to.eql(\"Buy Groceries\");\r",
+									"    pm.expect(jsonData.result[1].title).to.eql(\"New Year\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3769/todo/content?status=PENDING&sortBy=TITLE&persistenceMethod=POSTGRES",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3769",
+							"path": [
+								"todo",
+								"content"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "PENDING"
+								},
+								{
+									"key": "sortBy",
+									"value": "TITLE"
+								},
+								{
+									"key": "persistenceMethod",
+									"value": "POSTGRES"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Todo #3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"After deleting a todo, expect to remain with two TODOs in the system\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result).to.eql(2);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3769/todo?id=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3769",
+							"path": [
+								"todo"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get total Todos with filter=PENDING (from MONGO)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"expect only 1 PENDING todo in the system (from mongo)\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result).to.eql(1);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3769/todo/size?status=PENDING&persistenceMethod=MONGO",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3769",
+							"path": [
+								"todo",
+								"size"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "PENDING"
+								},
+								{
+									"key": "persistenceMethod",
+									"value": "MONGO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get total Todos with filter=PENDING (from POSTGRES)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"expect only 1 PENDING todo in the system (from mongo)\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result).to.eql(1);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3769/todo/size?status=PENDING&persistenceMethod=POSTGRES",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3769",
+							"path": [
+								"todo",
+								"size"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "PENDING"
+								},
+								{
+									"key": "persistenceMethod",
+									"value": "POSTGRES"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

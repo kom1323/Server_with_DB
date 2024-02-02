@@ -1,0 +1,1 @@
+docker run -d --name postgres-db -p 5432:5432 theshultz/kaplat-postgres-instance
