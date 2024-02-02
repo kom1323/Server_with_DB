@@ -12,8 +12,7 @@ class Base(DeclarativeBase):
 class PostgresTodos(Base):
     __tablename__ = 'todos'  # Replace with your actual table name
 
-
-    
+ 
     title: Mapped[str] = mapped_column(String(30))
     state: Mapped[str] = mapped_column(String(30))
     content: Mapped[str] = mapped_column(String(30))
@@ -95,14 +94,3 @@ class PostgresTodos(Base):
 
         session.add(new_entry)
         return new_entry
-
-
-"""
-postgres_engine = create_engine('postgresql://postgres:docker@localhost:5432/todos', echo=False)
-
-with Session(postgres_engine) as session, session.begin():
-    print(PostgresTodos.get_number_of_entries(session))
-
-
-"""
-

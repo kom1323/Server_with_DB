@@ -6,7 +6,8 @@ from Loggin_etc import *
 from datetime import datetime
 import logging
 import sqlalchemy
-import mongoengine
+from mongoengine import connect
+from mongo_todos import mongoTodos
 from postgres_todos import PostgresTodos
 from sqlalchemy.orm import Session
 import sqlalchemy
@@ -23,6 +24,8 @@ request_number = 1
 postgres_engine = sqlalchemy.create_engine('postgresql://postgres:docker@localhost:5432/todos', echo=False)
 with Session(postgres_engine) as session, session.begin():
     idGenerator = PostgresTodos.get_number_of_entries(session)
+connect('todos', host='localhost', port=27017)
+
 
 
 
@@ -198,8 +201,12 @@ class MyHTTP(CGIHTTPRequestHandler):
             persistence_method = query_params.get('persistenceMethod', [None])[0]
 
             if status in ['ALL', 'PENDING', 'LATE', 'DONE']:
-                with Session(postgres_engine) as session, session.begin():
-                    numoftodos = PostgresTodos.get_number_of_entries(session, status)
+                if persistence_method == 'POSTGRES':
+                    with Session(postgres_engine) as session, session.begin():
+                        numoftodos = PostgresTodos.get_number_of_entries(session, status)
+                elif persistence_method == 'MONGO':
+                    numoftodos = mongoTodos.get_number_of_entries(status)
+
             else:
                 is_invalid = True
 
