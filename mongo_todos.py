@@ -50,3 +50,30 @@ class mongoTodos(Document):
         if doc:
             doc.state = new_state
             doc.save()
+
+
+    @classmethod
+    def delete_by_rawid(cls, rawid):
+        doc = cls.objects(rawid=rawid).first()
+        if doc:
+            doc.delete()
+            return True
+        else:
+            return False
+        
+    @classmethod
+    def create_entry(cls, rawid, duedate, title, content):
+        # Check if the title is already taken
+        if cls.objects(rawid=rawid).first():
+            raise ValueError(True)
+
+        new_doc = cls(
+            title=title,
+            state='PENDING',
+            content=content,
+            rawid=rawid,
+            duedate=duedate
+        )
+
+        new_doc.save()
+        return new_doc

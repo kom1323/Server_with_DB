@@ -96,7 +96,7 @@ class MyHTTP(CGIHTTPRequestHandler):
                         mongoTodos.update_state_by_rawid(identity, status)
             else:
                 res = {
-                    "errorMessage": f"Error: no such TODO with id {identity}"
+                    "errorMessage": f"Error: no such Status option {status}"
                 }
                 self.send_response(400)
                 
@@ -135,6 +135,9 @@ class MyHTTP(CGIHTTPRequestHandler):
 
             with Session(postgres_engine) as session, session.begin():
                     didremove = PostgresTodos.delete_by_rawid(session, identity)
+                    didremove_mongo = mongoTodos.delete_by_rawid(identity)
+                    if didremove != didremove_mongo:
+                        didremove = False
 
             if didremove:
                 idGenerator -= 1
@@ -293,8 +296,11 @@ class MyHTTP(CGIHTTPRequestHandler):
                     try:
                         idGenerator += 1
                         PostgresTodos.create_entry(session, idGenerator, due, title, content)
+                        mongoTodos.create_entry(idGenerator, due, title, content)
+                        
                     except ValueError as e:
                         taken = e
+                        idGenerator -= 1
            
             if late:
                 res = {
