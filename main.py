@@ -93,6 +93,7 @@ class MyHTTP(CGIHTTPRequestHandler):
             if status in ['PENDING', 'LATE', 'DONE']:
                 with Session(postgres_engine) as session, session.begin():
                         old_status = PostgresTodos.update_state_by_rawid(session, identity, status)
+                        mongoTodos.update_state_by_rawid(identity, status)
             else:
                 res = {
                     "errorMessage": f"Error: no such TODO with id {identity}"
@@ -237,42 +238,7 @@ class MyHTTP(CGIHTTPRequestHandler):
 
 
             self.todo_logger.todo_info(f"Extracting todos content. Filter: {status} | Sorting by: {sortby}", request_number)
-            """
-            isall = False
-            jsonarr = []
-            sortedjson = []
-            counter = 0
-
-            if status == "ALL":
-                isall = True
-
-            for x in todos:
-                curstat = x.status
-                if curstat == 0:
-                    statusname = "PENDING"
-                elif curstat == 1:
-                    statusname = "LATE"
-                elif curstat == 2:
-                    statusname = "DONE"
-                else:
-                    self.send_response(400)
-                    is_invalid = True
-
-                if status == statusname or isall:
-                    counter += 1
-                    jsonarr.append(json.loads(json.dumps({"id": x.id, "title": f"{x.title}", "content": f"{x.content}", "status": f"{statusname}", "dueDate": x.dueDate})))
-
-            if sortby == "ID":
-                sortedjson = sorted(jsonarr, key=lambda y: y["id"])
-            elif sortby == "DUE_DATE":
-                sortedjson = sorted(jsonarr, key=lambda y: y["dueDate"])
-            elif sortby == "TITLE":
-                sortedjson = sorted(jsonarr, key=lambda y: y["title"])
-            else:
-                is_invalid = True
-            """
-            
-
+   
             if status in ['ALL', 'PENDING', 'LATE', 'DONE']:
                 if persistence_method == 'POSTGRES':
                     with Session(postgres_engine) as session, session.begin():
@@ -280,9 +246,7 @@ class MyHTTP(CGIHTTPRequestHandler):
                 elif persistence_method == 'MONGO':
                     sortedjson, counter = mongoTodos.get_entries_as_json(status, sortby)
 
-
-            
-            
+         
             if sortedjson == None:  #Added if for invalid ~ check later
                 is_invalid = False
             

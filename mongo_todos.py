@@ -43,3 +43,10 @@ class mongoTodos(Document):
             sortedjson = None
 
         return sortedjson, counter
+    
+    @classmethod
+    def update_state_by_rawid(cls, rawid, new_state):
+        doc = cls.objects(rawid=rawid).first()
+        if doc:
+            doc.state = new_state
+            doc.save()
